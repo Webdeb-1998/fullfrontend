@@ -31,7 +31,7 @@ const ShoppeOnboarding = () => {
           style={styles.primaryButton}
           activeOpacity={0.8}
         >
-          <Text style={styles.primaryButtonText}>Let's get started</Text>
+          <Text style={styles.primaryButtonText}>Let's get started demo</Text>
         </TouchableOpacity>
 
         <TouchableOpacity 

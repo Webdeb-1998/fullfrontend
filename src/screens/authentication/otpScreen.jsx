@@ -20,49 +20,70 @@ const OtpScreen = () => {
   const navigation = useNavigation();
 
   const [otp, setOtp] = useState(["", "", "", ""]);
+  const [error, setError] = useState("");
   const inputs = useRef([]);
 
+  // ✅ Handle input change
   const handleChange = (text, index) => {
-    if (!/^\d*$/.test(text)) return; // Allow numbers only
+    if (!/^\d*$/.test(text)) return;
 
     const newOtp = [...otp];
     newOtp[index] = text;
     setOtp(newOtp);
+    setError("");
 
-    // Move to next input
     if (text && index < 3) {
       inputs.current[index + 1].focus();
     }
-
-    // If all digits entered
-    if (newOtp.every((digit) => digit !== "")) {
-      const finalOtp = newOtp.join("");
-
-      // 🔐 Replace this with API verification
-      if (finalOtp === "1234") {
-        navigation.replace("Home"); // Navigate to Home
-      } else {
-        alert("Invalid OTP");
-      }
-    }
   };
 
+  // ✅ Backspace handling
   const handleKeyPress = (e, index) => {
     if (e.nativeEvent.key === "Backspace" && otp[index] === "" && index > 0) {
       inputs.current[index - 1].focus();
     }
   };
 
+  // ✅ Validate OTP
+  const validateOtp = () => {
+    if (otp.some((digit) => digit === "")) {
+      setError("Please enter complete OTP");
+      return false;
+    }
+    return true;
+  };
+
+  // ✅ Verify OTP
+  const handleVerify = () => {
+    if (!validateOtp()) return;
+
+    const finalOtp = otp.join("");
+
+    // 🔐 Replace with API
+    if (finalOtp === "1234") {
+      navigation.replace("Home");
+    } else {
+      setError("Invalid OTP");
+    }
+  };
+
+  // 🔁 Resend OTP (dummy)
+  const handleResend = () => {
+    setOtp(["", "", "", ""]);
+    inputs.current[0].focus();
+    setError("");
+    alert("OTP Resent!");
+  };
+
   return (
     <SafeAreaView style={globleStyles.container}>
       <StatusBar barStyle="dark-content" />
+
       <View style={styles.container}>
-        {/* Avatar */}
         <View style={styles.avatarWrapper}>
           <Userimage style={styles.avatar} />
         </View>
 
-        {/* Title */}
         <Text style={globleStyles.title}>Hello, Romina!!</Text>
         <Text style={globleStyles.subtitle}>Type your OTP</Text>
 
@@ -82,14 +103,29 @@ const OtpScreen = () => {
           ))}
         </View>
 
-        {/* Bottom Section */}
+        {/* ❌ Error */}
+        {error ? (
+          <Text style={globleStyles.errorText}>{error}</Text>
+        ) : null}
+
+        {/* ✅ Verify Button */}
+        <TouchableOpacity
+          style={[globleStyles.primaryButton, { marginTop: 20, width: "80%" }]}
+          onPress={handleVerify}
+        >
+          <Text style={globleStyles.primaryButtonText}>Verify OTP</Text>
+        </TouchableOpacity>
+
+        {/* 🔁 Resend */}
+        <TouchableOpacity onPress={handleResend} style={{ marginTop: 15 }}>
+          <Text style={{ color: "#007BFF" }}>Resend OTP</Text>
+        </TouchableOpacity>
+
+        {/* Bottom */}
         <View style={styles.bottomRow}>
           <Text style={styles.notYou}>Not you?</Text>
 
-          <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={() => navigation.navigate("Login")}
-          >
+          <TouchableOpacity onPress={() => navigation.navigate("Login")}>
             <View style={globleStyles.arrowContainer}>
               <ArrowIcon />
             </View>
@@ -99,58 +135,5 @@ const OtpScreen = () => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#FFFFFF",
-    alignItems: "center",
-  },
-
-  avatarWrapper: {
-    marginTop: 150,
-    width: 90,
-    height: 90,
-    borderRadius: 45,
-    backgroundColor: "#FFFFFF",
-    alignItems: "center",
-    justifyContent: "center",
-    elevation: 6,
-  },
-
-  avatar: {
-    width: 74,
-    height: 74,
-    borderRadius: 37,
-  },
-
-  otpContainer: {
-    flexDirection: "row",
-    marginTop: 32,
-  },
-
-  otpBox: {
-    width: 52,
-    height: 52,
-    backgroundColor: "#F2F2F2",
-    borderRadius: 14,
-    marginHorizontal: 6,
-    textAlign: "center",
-    fontSize: 18,
-  },
-
-  bottomRow: {
-    position: "absolute",
-    bottom: 40,
-    flexDirection: "row",
-    alignItems: "center",
-  },
-
-  notYou: {
-    fontSize: 14,
-    color: "#7A7A7A",
-    marginRight: 14,
-  },
-});
 
 export default OtpScreen;

@@ -33,14 +33,14 @@ export const globleStyles = StyleSheet.create({
         color: '#371f25',
         marginBottom: 20,
         letterSpacing: -0.5,
-        fontFamily:'Popins-Regular'
+        fontFamily: 'Popins-Regular'
     },
     subtitle: {
         fontSize: 16,
         color: '#6B7280',
         lineHeight: 24,
-        fontFamily:'Nunito-Medium',
-        fontWeight:'500'
+        fontFamily: 'Nunito-Medium',
+        fontWeight: '500'
     },
     spacer: {
         flex: 1,
@@ -94,7 +94,12 @@ export const globleStyles = StyleSheet.create({
         borderRadius: 3,
         marginBottom: 10,
     },
-
+    errorText: {
+        color: '#FF4D4F',
+        fontSize: 16,
+        marginVertical: 10,
+        fontFamily: 'Raleway-Medium'
+    },
 
     // Login Screen Styles
     keyboardView: {
@@ -124,19 +129,19 @@ export const globleStyles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#E0E0E0',
         borderRadius: 59,
-        marginBottom:7
+        marginBottom: 7
     },
-   cancelButtonText:{
-    textAlign:'center',
-    fontSize: 16,
-    color: '#202020',
-    fontWeight: '300',
-    fontFamily: 'Raleway-Medium'
-   },
+    cancelButtonText: {
+        textAlign: 'center',
+        fontSize: 16,
+        color: '#202020',
+        fontWeight: '300',
+        fontFamily: 'Raleway-Medium'
+    },
 
-//    otp screen 
+    //    otp screen 
 
-otpverify:{
-    alignItems:'flex-end'
-}
+    otpverify: {
+        alignItems: 'flex-end'
+    }
 })

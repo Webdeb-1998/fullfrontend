@@ -19,7 +19,6 @@ const RegisterScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [number, setNumber] = useState('');
-
   const [errors, setErrors] = useState({});
 
   // ✅ Validation Function
